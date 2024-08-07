@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { InvestmentInputData } from '../investment-input.model';
+import { InvestmentCalculatorService } from '../investment-calculator.service';
 
 @Component({
   selector: 'app-user-input',
@@ -11,20 +11,22 @@ import { InvestmentInputData } from '../investment-input.model';
 })
 export class UserInputComponent {
 
-  enteredInitialInvestment = '0';
-  enteredExpectedReturn = '0';
-  enteredDuration = '0';
-  enteredAnnualInvestment = '0';
+  enteredInitialInvestment = signal('1000');
+  enteredExpectedReturn = signal('10');
+  enteredDuration = signal('5');
+  enteredAnnualInvestment = signal('100');
 
-  @Output() calculate = new EventEmitter<InvestmentInputData>();
+  investmentCalculatorService: InvestmentCalculatorService = inject(InvestmentCalculatorService);
 
   onSubmit() {
-    this.calculate.emit({
-      initialInvestment: +this.enteredAnnualInvestment,
-      expectedReturn: +this.enteredExpectedReturn,
-      duration: +this.enteredDuration,
-      annualInvestment: +this.enteredAnnualInvestment 
-    });
+    const data ={
+      initialInvestment: +this.enteredAnnualInvestment(),
+      expectedReturn: +this.enteredExpectedReturn(),
+      duration: +this.enteredDuration(),
+      annualInvestment: +this.enteredAnnualInvestment() 
+    };
+
+    this.investmentCalculatorService.calculateInvestmentResults(data);
 
   }
 

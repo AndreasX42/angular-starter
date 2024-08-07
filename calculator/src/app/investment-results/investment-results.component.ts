@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { InvestmentInputData } from '../investment-input.model';
-import { InvestmentResultYear } from '../investment-result.model';
+import { Component, computed, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { InvestmentCalculatorService } from '../investment-calculator.service';
 
 @Component({
   selector: 'app-investment-results',
@@ -12,6 +11,8 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class InvestmentResultsComponent {
 
-  @Input({required: true}) results?: InvestmentResultYear[];
+  investmentCalculatorService: InvestmentCalculatorService = inject(InvestmentCalculatorService);
+
+  results = this.investmentCalculatorService.resultsData.asReadonly();
 
 }
