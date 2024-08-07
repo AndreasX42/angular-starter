@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-server-status',
@@ -9,4 +9,5 @@ import { Component } from '@angular/core';
 })
 export class ServerStatusComponent {
 
+  currentStatus = 'online';
 }
